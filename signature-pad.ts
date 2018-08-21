@@ -130,11 +130,13 @@ export class SignaturePad implements ControlValueAccessor {
   // notify subscribers on signature begin
   public onBegin(): void {
     this.onBeginEvent.emit(true);
+    this.touch();
   }
 
   // notify subscribers on signature end
   public onEnd(): void {
     this.onEndEvent.emit(true);
+    this.callOnChange();
   }
 
   public queryPad(): any {
@@ -149,13 +151,21 @@ export class SignaturePad implements ControlValueAccessor {
     this.touched.push(fn);
   }
 
+  public callOnChange() {
+    this.changed.forEach(f => f(this.value));
+  }
+
+  public touch() {
+    this.touched.forEach(f => f());
+  }
+
   public writeValue(value: any): void {
     this.value = value;
   }
 
   get value(): string {
     if(this.signaturePad && !this.isEmpty()){
-      return this.signaturePad.toDataURL();
+      return this.toDataURL();
     }
     else{
       return '';
@@ -163,6 +173,12 @@ export class SignaturePad implements ControlValueAccessor {
   }
 
   set value(val: string) {
-    this.signaturePad.fromDataURL(val);
+    if(val == ''){
+      this.clear();
+    }
+    else{
+      this.fromDataURL(val);
+    }
+    this.callOnChange();
   }
 }
