@@ -154,10 +154,15 @@ export class SignaturePad implements ControlValueAccessor {
   }
 
   get value(): string {
-    return this.signaturePad.toDataUrl();
+    if(this.signaturePad && !this.isEmpty()){
+      return this.signaturePad.toDataURL();
+    }
+    else{
+      return '';
+    }
   }
 
   set value(val: string) {
-    this.signaturePad.fromDataUrl(val);
+    this.signaturePad.fromDataURL(val);
   }
 }
