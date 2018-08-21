@@ -1,4 +1,4 @@
-	{
+{
   "name": "angular2-signaturepad",
   "version": "2.8.0-archipel1",
   "description": "Angular2 Component wrapper for szimek / signature_pad",
@@ -32,6 +32,7 @@
     "@angular/compiler": "2.0.1",
     "@angular/compiler-cli": "0.6.3",
     "@angular/core": "2.0.1",
+    "@angular/forms": "^2.0.1",
     "@angular/platform-browser": "2.0.1",
     "@angular/platform-browser-dynamic": "2.0.1",
     "@angular/platform-server": "2.0.1",
