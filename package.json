@@ -1,6 +1,6 @@
-{
+	{
   "name": "angular2-signaturepad",
-  "version": "2.8.0",
+  "version": "2.8.0-archipel1",
   "description": "Angular2 Component wrapper for szimek / signature_pad",
   "main": "index.js",
   "typings": "./index.d.ts",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wulfsolter/angular2-signaturepad.git"
+    "url": "git+https://github.com/Archipel/angular2-signaturepad.git"
   },
   "keywords": [
     "signature",
