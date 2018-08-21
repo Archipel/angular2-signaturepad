@@ -1,6 +1,7 @@
 'use strict';
 
 import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 declare var require: any;
 
@@ -8,16 +9,21 @@ export interface Point {
   x: number;
   y: number;
   time: number;
-};
+}
 
 export type PointGroup = Array<Point>;
 
 @Component({
   template: '<canvas></canvas>',
   selector: 'signature-pad',
+  providers: [{
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: SignaturePad,
+  }],
 })
 
-export class SignaturePad {
+export class SignaturePad implements ControlValueAccessor {
 
   @Input() public options: Object;
   @Output() public onBeginEvent: EventEmitter<boolean>;
@@ -25,6 +31,9 @@ export class SignaturePad {
 
   private signaturePad: any;
   private elementRef: ElementRef;
+
+  private changed: any = new Array<(value: any) => void>();
+  private touched: any = new Array<() => void>();
 
   constructor(elementRef: ElementRef) {
     // no op
@@ -128,7 +137,27 @@ export class SignaturePad {
     this.onEndEvent.emit(true);
   }
 
-	public queryPad(): any {
-		return this.signaturePad;
-	}
+  public queryPad(): any {
+    return this.signaturePad;
+  }
+
+  public registerOnChange(fn: (value: any) => void): void {
+    this.changed.push(fn);
+  }
+
+  public registerOnTouched(fn: () => void): void {
+    this.touched.push(fn);
+  }
+
+  public writeValue(value: any): void {
+    this.value = value;
+  }
+
+  get value(): string {
+    return this.signaturePad.toDataUrl();
+  }
+
+  set value(val: string) {
+    this.signaturePad.fromDataUrl(val);
+  }
 }
