@@ -31,6 +31,8 @@ export declare class SignaturePad implements ControlValueAccessor {
     queryPad(): any;
     registerOnChange(fn: (value: any) => void): void;
     registerOnTouched(fn: () => void): void;
+    callOnChange(): void;
+    touch(): void;
     writeValue(value: any): void;
     value: string;
 }
